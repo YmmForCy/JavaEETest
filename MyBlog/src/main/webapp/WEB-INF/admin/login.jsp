@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     String contextPath = request.getContextPath();
@@ -14,13 +15,18 @@
 <body>
 <div class="container">
 
-    <form class="form-signin" action="/sang/dologin" method="post">
+    <form class="form-signin" action="/chenyu/dologin" method="post">
         <h2 class="form-signin-heading">请登录</h2>
-        <div><%=request.getAttribute("error")%></div>
+        <div style="color: red;">
+            <c:if test="${error!=null}">
+                <%=request.getAttribute("error")%>
+            </c:if>
+            <%--<%=request.getAttribute("error")%>--%>
+        </div>
         <label for="inputEmail" class="sr-only">请输入用户名</label>
-        <input type="text" id="inputEmail" name="username" value="123" class="form-control" placeholder="用户名" required autofocus>
+        <input type="text" id="inputEmail" name="username" class="form-control" placeholder="用户名" required autofocus>
         <label for="inputPassword" class="sr-only">密码</label>
-        <input type="password" id="inputPassword" value="123" name="password" class="form-control" placeholder="密码" required>
+        <input type="password" id="inputPassword" name="password" class="form-control" placeholder="密码" required>
         <div class="checkbox">
             <label>
                 <input type="checkbox" value="remember-me"> 记住我

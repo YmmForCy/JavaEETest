@@ -16,7 +16,7 @@
 </head>
 <body>
 <div class="container">
-    <form method="post" action="/sang/write">
+    <form method="post" action="/chenyu/write">
         <br>
         <br>
         <div class="row">
@@ -26,7 +26,7 @@
                         <c:choose>
                             <c:when test="${article==null}">
                                 <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
-                                        aria-haspopup="true" aria-expanded="false" id="categoryBtn">分类
+                                        aria-haspopup="true" aria-expanded="false" id="categoryBtn">未分类
                                 </button>
                             </c:when>
                             <c:otherwise>
@@ -44,7 +44,7 @@
                             </c:forEach>
                         </ul>
                     </div>
-                    <input name="category" id="cateoryInput" type="hidden">
+                    <input name="category" id="categoryInput" type="hidden">
                     <c:choose>
                         <c:when test="${article==null}">
                             <input type="text" class="form-control" placeholder="标题" name="title">
@@ -57,68 +57,79 @@
                     </c:choose>
                 </div>
             </div>
+            <%--<div class="row">--%>
+            <c:choose>
+                <c:when test="${article==null}">
+                    <div class="col-lg-6" style="text-align: right;">
+                        <p>
+                            <input type="submit" class="btn btn-primary dropdown-toggle" role="button" value="发表">
+                        </p>
+                    </div>
+                </c:when>
+                <c:otherwise>
+                    <div class="col-lg-6" style="text-align: right;">
+                        <p>
+                            <input type="submit" class="btn btn-primary dropdown-toggle" role="button" value="修改">
+                        </p>
+                    </div>
+                </c:otherwise>
+            </c:choose>
+
+            <%--</div>--%>
         </div>
-</div>
-<br>
-<div id="layout" style="width: 100%;height: 100%">
-    <div id="test-editormd">
-        <c:choose>
-            <c:when test="${article==null}">
-                <textarea style="display:none;" name="content"></textarea>
-            </c:when>
-            <c:otherwise>
-                <textarea style="display:none;" name="content">${article.content}</textarea>
-            </c:otherwise>
-        </c:choose>
+        <br>
+        <div id="layout" style="width: 100%;height: 100%">
+            <div id="test-editormd">
+                <c:choose>
+                    <c:when test="${article==null}">
+                        <textarea style="display:none;" name="content"></textarea>
+                    </c:when>
+                    <c:otherwise>
+                        <textarea style="display:none;" name="content">${article.content}</textarea>
+                    </c:otherwise>
+                </c:choose>
+            </div>
+        </div>
 
-    </div>
-</div>
+        <script type="text/javascript">
+            var testEditor;
+            $(function () {
+                testEditor = editormd("test-editormd", {
+                    width: "100%",
+                    height: 640,
+                    syncScrolling: "single",
+                    path: "/static/editormd/lib/",
+                    imageUpload: true,
+                    imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+                    imageUploadURL: "./php/upload.php?test=dfdf"
 
-<script type="text/javascript">
-    var testEditor;
-    $(function () {
-        testEditor = editormd("test-editormd", {
-            width: "100%",
-            height: 640,
-            syncScrolling: "single",
-            path: "/static/editormd/lib/",
-            imageUpload: true,
-            imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
-            imageUploadURL: "./php/upload.php?test=dfdf"
+                    /*
+                     上传的后台只需要返回一个 JSON 数据，结构如下：
+                     {
+                     success : 0 | 1,           // 0 表示上传失败，1 表示上传成功
+                     message : "提示的信息，上传成功或上传失败及错误信息等。",
+                     url     : "图片地址"        // 上传成功时才返回
+                     }
+                     */
+                });
 
-            /*
-             上传的后台只需要返回一个 JSON 数据，结构如下：
-             {
-             success : 0 | 1,           // 0 表示上传失败，1 表示上传成功
-             message : "提示的信息，上传成功或上传失败及错误信息等。",
-             url     : "图片地址"        // 上传成功时才返回
-             }
-             */
-        });
-
-        /*
-         // or
-         testEditor = editormd({
-         id      : "test-editormd",
-         width   : "90%",
-         height  : 640,
-         path    : "../lib/"
-         });
-         */
-    });
-</script>
-<div class="row">
-    <div class="col-md-6 col-md-offset-6">
-        <p>
-            <input type="submit" class="btn btn-primary btn-lg" role="button" value="发表">
-        </p>
-    </div>
+                /*
+                 // or
+                 testEditor = editormd({
+                 id      : "test-editormd",
+                 width   : "90%",
+                 height  : 640,
+                 path    : "../lib/"
+                 });
+                 */
+            });
+        </script>
     </form>
 </div>
 <script>
     function selectCategory(name, displayName) {
         $("#categoryBtn").html(displayName);
-        $("#cateoryInput").val(name);
+        $("#categoryInput").val(name);
     }
 </script>
 </body>

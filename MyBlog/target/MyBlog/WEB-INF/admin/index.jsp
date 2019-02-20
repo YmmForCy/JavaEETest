@@ -17,23 +17,28 @@
         <!-- Default panel contents -->
         <div class="panel-heading">文章列表</div>
         <div class="panel-body">
-            <p><a class="btn btn-primary btn-sm" href="/sang/write" role="button">写博客</a></p>
+            <p>
+                <a class="btn btn-primary btn-sm" href="/chenyu/write" role="button">写博客</a>
+                <a class="btn btn-primary btn-sm" href="/" role="button">返回首页</a>
+            </p>
         </div>
 
         <table class="table">
             <tr class="info">
                 <td>编号</td>
+                <td>id</td>
                 <td>标题</td>
                 <td>摘要</td>
                 <td style="text-align: center" colspan="2">操作</td>
             </tr>
-            <c:forEach begin="0" var="article" items="${articles}" step="1">
+            <c:forEach begin="0" var="article" items="${articlesForAdmin}" step="1" varStatus="row">
                 <tr>
+                    <td>${row.count}</td>
                     <td>${article.id}</td>
                     <td>${article.title}</td>
                     <td>${article.summary}</td>
-                    <td><a href="/sang/update/${article.id}">修改</a></td>
-                    <td><a href="/sang/delete/${article.id}">删除</a></td>
+                    <td><a href="/chenyu/update/${article.id}">修改</a></td>
+                    <td><a href="/chenyu/delete/${article.id}">删除</a></td>
                 </tr>
             </c:forEach>
         </table>
